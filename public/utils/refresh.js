@@ -1,7 +1,7 @@
 import fetchPairs from './fetchPairs.js'
 
-const refresh = (function (payloadFX) {
-    fetchPairs(payloadFX).then( res => {
+const refresh = (async function (payloadFX) {
+    await fetchPairs(payloadFX).then( res => {
         // GRAB ONE
         window.appState = [...window.appState].map(e => {
             // FIND AT THE SECOND ARRAY

@@ -11,12 +11,6 @@ describe('Test UI Components & Utils', ()=>{
     ]
     
     beforeAll( () => {
-        fetchPairs(payloadFX).then( res => {
-            ajaxRes = res
-        })
-
-        refresh(["USD CHF"]);
-
         window.appState = [
             {"pair":"USD CHF", "buy":0.99143, "sell":0.99043, "status": "decrease"},
         ]
@@ -37,15 +31,20 @@ describe('Test UI Components & Utils', ()=>{
     })
 
     it('Should retrieve data via fetchPairs util', (done) => {
-        expect(ajaxRes.length).toBe(1);  
-        done();   
+        fetchPairs(payloadFX).then( res => {
+            ajaxRes = res
+            expect(ajaxRes.length).toBe(1);  
+            done();          
+        }) 
     })
 
-    it('Should refresh component via refresh util', (done) => {
-        expect(
-            document.getElementsByClassName("sell-inside-number-1")[0].innerText +
-            document.getElementsByClassName("sell-inside-number-2")[0].innerText + 
-            document.getElementsByClassName("sell-inside-number-3")[0].innerText).toBeGreaterThan("0.80000");
+    it('Should refresh component via refresh util', (done) => {  
+        refresh(["USD CHF"]).then( () => {
+            expect(
+                document.getElementsByClassName("sell-inside-number-1")[0].innerText +
+                document.getElementsByClassName("sell-inside-number-2")[0].innerText + 
+                document.getElementsByClassName("sell-inside-number-3")[0].innerText).toBeGreaterThan("0.80000");
             done();
+        });   
     })
 })
